@@ -10,121 +10,117 @@
     return startSec > 0 ? `${base}&t=${startSec}s` : base;
   };
 
-  function renderShell({ title, bodyHtml }) {
+  const EMBED_URL = (id, startSec) => {
+    const qs = new URLSearchParams({
+      autoplay: "1",
+      rel: "0",
+      modestbranding: "1",
+      playsinline: "1"
+    });
+    if (startSec > 0) qs.set("start", String(startSec));
+    return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?${qs.toString()}`;
+  };
+
+  function renderError(msg) {
     root.innerHTML = `
-      <div style="position:fixed;inset:0;display:flex;flex-direction:column;background:#000">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px)">
-          <div style="color:#fff;font-family:system-ui;font-size:13px;opacity:.9">${title}</div>
-          <a
-            href="${WATCH_URL(v, t)}"
-            target="_blank"
-            rel="noopener noreferrer"
-            style="color:#fff;font-family:system-ui;font-size:13px;text-decoration:none;padding:6px 10px;border:1px solid rgba(255,255,255,.25);border-radius:10px"
-            title="Ouvrir sur YouTube"
-          >Ouvrir sur YouTube</a>
-        </div>
-        <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center">
-          ${bodyHtml}
+      <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000">
+        <div style="color:#fff;font-family:system-ui;padding:16px;max-width:720px;line-height:1.35">
+          <div style="font-size:15px;font-weight:600;margin-bottom:8px">ManuOS Player — erreur</div>
+          <div style="opacity:.9">${msg}</div>
         </div>
       </div>
     `;
-  }
-
-  function renderError(msg) {
-    renderShell({
-      title: "ManuOS Player",
-      bodyHtml: `
-        <div style="color:#fff;font-family:system-ui;padding:16px;max-width:720px;line-height:1.35">
-          <div style="font-size:15px;font-weight:600;margin-bottom:8px">Lecture impossible</div>
-          <div style="opacity:.9">${msg}</div>
-        </div>
-      `
-    });
   }
 
   if (!v) {
     renderError("Ajoute ?v=VIDEO_ID (ex: ?v=nxP3b2VF3_g&t=0)");
     return;
   }
-
   if (!/^[a-zA-Z0-9_-]{6,}$/.test(v)) {
     renderError("ID YouTube invalide.");
     return;
   }
 
-  const qs = new URLSearchParams({
-    autoplay: "1",
-    rel: "0",
-    modestbranding: "1",
-    playsinline: "1"
-  });
-  if (t > 0) qs.set("start", String(t));
+  const watchUrl = WATCH_URL(v, t);
+  const embedSrc = EMBED_URL(v, t);
 
-  const src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(v)}?${qs.toString()}`;
+  // IMPORTANT :
+  // - Aucun overlay visible "en permanence" (ça gênait la lecture).
+  // - Les actions apparaissent seulement au hover (discret).
+  // - Un fallback n'apparaît que si l'iframe ne charge pas dans un délai raisonnable.
+  root.innerHTML = `
+    <div id="wrap" style="position:fixed;inset:0;background:#000">
+      <style>
+        /* mini-actions discrètes : visibles seulement au survol / focus */
+        #wrap .ytActions{
+          position:absolute; top:12px; right:12px;
+          display:flex; gap:10px; align-items:center;
+          opacity:0; transform:translateY(-4px);
+          pointer-events:none;
+          transition:opacity .15s ease, transform .15s ease;
+        }
+        #wrap:hover .ytActions,
+        #wrap:focus-within .ytActions{
+          opacity:1; transform:translateY(0);
+          pointer-events:auto;
+        }
+        #wrap .ytBtn{
+          color:#fff; font-family:system-ui; font-size:13px; text-decoration:none;
+          padding:8px 12px;
+          border:1px solid rgba(255,255,255,.25);
+          border-radius:12px;
+          background:rgba(0,0,0,.35);
+          backdrop-filter:blur(6px);
+        }
+        #wrap .ytBtn:active{ transform:scale(.98); }
+      </style>
 
-  // UI "player" + fallback toujours dispo
-  renderShell({
-    title: "ManuOS Player",
-    bodyHtml: `
-      <div style="position:relative;width:100%;height:100%">
-        <iframe
-          id="yt"
-          src="${src}"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          style="border:0;width:100%;height:100%"
-        ></iframe>
+      <iframe
+        id="yt"
+        src="${embedSrc}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="border:0;width:100%;height:100%;display:block"
+      ></iframe>
 
-        <!-- Fallback panel (affiché si blocage détecté / timeout) -->
-        <div
-          id="fallback"
-          style="
-            position:absolute;inset:0;display:none;align-items:center;justify-content:center;
-            background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
-          "
-        >
-          <div style="color:#fff;font-family:system-ui;padding:16px;max-width:760px;line-height:1.35">
-            <div style="font-size:15px;font-weight:700;margin-bottom:8px">Intégration YouTube désactivée ou bloquée</div>
-            <div style="opacity:.9;margin-bottom:12px">
-              Certaines vidéos refusent l’intégration (réglage du créateur) ou sont bloquées par YouTube.
-              Dans ce cas, ouvre-la directement sur YouTube.
-            </div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap">
-              <a
-                href="${WATCH_URL(v, t)}"
-                target="_blank"
-                rel="noopener noreferrer"
-                style="color:#fff;font-family:system-ui;font-size:13px;text-decoration:none;padding:8px 12px;border:1px solid rgba(255,255,255,.25);border-radius:12px;background:rgba(255,255,255,.06)"
-              >Ouvrir sur YouTube</a>
+      <div class="ytActions" aria-hidden="true">
+        <a class="ytBtn" href="${watchUrl}" target="_blank" rel="noopener">Ouvrir sur YouTube</a>
+      </div>
 
-              <button
-                id="retry"
-                type="button"
-                style="cursor:pointer;color:#fff;font-family:system-ui;font-size:13px;padding:8px 12px;border:1px solid rgba(255,255,255,.25);border-radius:12px;background:transparent"
-              >Réessayer</button>
-            </div>
+      <div
+        id="fallback"
+        style="
+          position:absolute; inset:0; display:none; align-items:center; justify-content:center;
+          background:rgba(0,0,0,.78); backdrop-filter:blur(6px);
+        "
+      >
+        <div style="color:#fff;font-family:system-ui;padding:16px;max-width:760px;line-height:1.35">
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">Impossible de lire la vidéo ici</div>
+          <div style="opacity:.9;margin-bottom:12px">
+            Certaines vidéos refusent l’intégration (réglage du créateur) ou sont bloquées par YouTube.
+            Dans ce cas, ouvre-la directement sur YouTube.
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a
+              href="${watchUrl}"
+              target="_blank"
+              rel="noopener"
+              style="color:#fff;font-family:system-ui;font-size:13px;text-decoration:none;padding:8px 12px;border:1px solid rgba(255,255,255,.25);border-radius:12px;background:rgba(255,255,255,.06)"
+            >Ouvrir sur YouTube</a>
+
+            <button
+              id="retry"
+              type="button"
+              style="cursor:pointer;color:#fff;font-family:system-ui;font-size:13px;padding:8px 12px;border:1px solid rgba(255,255,255,.25);border-radius:12px;background:transparent"
+            >Réessayer</button>
           </div>
         </div>
-
-        <!-- Lien discret toujours disponible (même si l'embed affiche un message interne) -->
-        <button
-          id="help"
-          type="button"
-          style="
-            position:absolute;right:12px;bottom:12px;cursor:pointer;
-            color:#fff;font-family:system-ui;font-size:12px;
-            padding:6px 10px;border:1px solid rgba(255,255,255,.22);border-radius:999px;
-            background:rgba(0,0,0,.35)
-          "
-          title="Problème de lecture ?"
-        >Problème de lecture ?</button>
       </div>
-    `
-  });
+    </div>
+  `;
 
   const iframe = document.getElementById("yt");
   const fallback = document.getElementById("fallback");
-  const btnHelp = document.getElementById("help");
   const btnRetry = document.getElementById("retry");
 
   const showFallback = () => {
@@ -137,19 +133,14 @@
     fallback.style.display = "none";
   };
 
-  btnHelp?.addEventListener("click", showFallback);
   btnRetry?.addEventListener("click", () => {
     hideFallback();
-    // force reload de l'iframe
-    const cur = iframe?.src;
-    if (iframe && cur) {
-      iframe.src = cur;
-    }
-    // relance le timer de détection
+    if (iframe?.src) iframe.src = iframe.src; // reload
     armTimeout();
   });
 
-  // Détection "raisonnable" : si l'iframe ne charge pas dans un délai → fallback.
+  // Détection : si l'iframe ne "load" pas dans un délai, on affiche le fallback.
+  // (On ne peut pas lire l'erreur interne d'un embed YouTube => cross-origin.)
   let loadSeen = false;
   let timeoutId = null;
 
@@ -157,19 +148,15 @@
     if (timeoutId) clearTimeout(timeoutId);
     loadSeen = false;
 
-    // 4s : laisse le temps aux connexions lentes / 1er chargement
+    // 7s : plus safe pour connexions lentes / premier chargement
     timeoutId = setTimeout(() => {
-      // Si aucun load, on considère très probable un blocage.
       if (!loadSeen) showFallback();
-    }, 4000);
+    }, 7000);
   };
 
   iframe?.addEventListener("load", () => {
     loadSeen = true;
-
-    // Même si "load" arrive, certaines pages embarquées affichent un message d’erreur.
-    // On ne peut pas le lire (cross-origin), donc on laisse le bouton "Problème de lecture ?"
-    // + on ne force pas le fallback si l’iframe a chargé.
+    hideFallback();
   });
 
   armTimeout();
