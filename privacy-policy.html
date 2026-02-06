@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My OS — Règles de confidentialité / Privacy Policy</title>
+  <meta name="description" content="My OS — Règles de confidentialité / Privacy Policy (bilingue FR/EN)." />
+  <style>
+    :root{
+      --bg: #0b0c10;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 980px;
+      --accent: rgba(255,255,255,.92);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 420px at 20% 5%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(700px 380px at 80% 0%, rgba(255,255,255,.06), transparent 55%),
+        radial-gradient(700px 500px at 40% 110%, rgba(255,255,255,.05), transparent 55%),
+        var(--bg);
+      line-height:1.6;
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 56px}
+    header{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      padding:18px 18px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, var(--card2), var(--card));
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .brand{display:flex; align-items:center; gap:14px; min-width: 0;}
+    .brand img{
+      width:54px; height:54px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 10px 28px rgba(0,0,0,.35);
+      object-fit:cover;
+      flex:0 0 auto;
+    }
+    .titleBlock{min-width:0}
+    h1{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.2px;
+      line-height:1.25;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .subtitle{
+      margin:6px 0 0 0;
+      color:var(--muted);
+      font-size:13px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .lang{
+      display:flex; gap:10px; align-items:center; flex:0 0 auto;
+      padding:6px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:rgba(0,0,0,.18);
+    }
+    .lang button{
+      appearance:none;
+      border:1px solid transparent;
+      background:transparent;
+      color:var(--muted);
+      font-weight:600;
+      padding:8px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:transform .08s ease, background .18s ease, color .18s ease, border-color .18s ease;
+    }
+    .lang button:hover{transform: translateY(-1px); color:var(--text);}
+    .lang button[aria-pressed="true"]{
+      background:rgba(255,255,255,.12);
+      border-color:rgba(255,255,255,.16);
+      color:var(--text);
+    }
+    main{
+      margin-top:16px;
+      padding:22px 18px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.04));
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    h2{margin:20px 0 8px; font-size:16px}
+    p{margin:10px 0; color:var(--text)}
+    ul{margin:10px 0 10px 20px; color:var(--text)}
+    li{margin:6px 0}
+    .muted{color:var(--muted)}
+    .pill{
+      display:inline-block;
+      padding:6px 10px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      color:var(--muted);
+      font-size:12px;
+      margin-top:8px;
+    }
+    footer{
+      margin-top:14px;
+      color:var(--muted);
+      font-size:12px;
+      text-align:center;
+    }
+    /* Language blocks */
+    [data-lang]{display:none}
+    [data-lang].active{display:block}
+    @media (max-width: 620px){
+      header{flex-direction:column; align-items:flex-start}
+      .lang{align-self:stretch; justify-content:space-between}
+      .lang button{flex:1}
+      .brand img{width:50px; height:50px}
+      h1{white-space:normal}
+      .subtitle{white-space:normal}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <!-- Place ton logo dans le repo GitHub à côté de ce fichier, et renomme-le en "logo.png" -->
+        <img src="logo.png" alt="My OS logo" />
+        <div class="titleBlock">
+          <h1>My OS — Règles de confidentialité / Privacy Policy</h1>
+          <div class="subtitle">Document bilingue (FR / EN)</div>
+          <div class="pill" id="lastUpdatedPill">Dernière mise à jour : février 2026</div>
+        </div>
+      </div>
+
+      <div class="lang" role="group" aria-label="Language">
+        <button id="btnFR" type="button" aria-pressed="true">FR</button>
+        <button id="btnEN" type="button" aria-pressed="false">EN</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- FR -->
+      <section data-lang="fr" class="active">
+        <h2>Principe fondamental</h2>
+        <p><strong>My OS ne collecte aucune donnée utilisateur.</strong><br>
+          <strong>My OS ne stocke aucune donnée sur des serveurs externes.</strong><br>
+          <strong>My OS ne partage aucune donnée avec des tiers.</strong>
+        </p>
+        <p class="muted">L’extension fonctionne exclusivement dans le navigateur de l’utilisateur.</p>
+
+        <h2>Fonctionnement local</h2>
+        <p>Toutes les préférences et configurations de My OS (langue, fond d’écran, disposition des blocs, réglages des widgets, raccourcis, etc.) sont :</p>
+        <ul>
+          <li>stockées <strong>localement</strong> dans le navigateur,</li>
+          <li>jamais transmises à l’éditeur,</li>
+          <li>jamais synchronisées vers un serveur externe.</li>
+        </ul>
+        <p>My OS ne possède <strong>aucune infrastructure serveur</strong>.</p>
+
+        <h2>Accès à certaines fonctionnalités du navigateur</h2>
+        <p>My OS peut accéder à certaines fonctionnalités du navigateur (ex. favoris, historique, onglets, téléchargements, géolocalisation) <strong>uniquement</strong> pour les afficher ou les utiliser dans le tableau de bord, à la demande de l’utilisateur.</p>
+        <p>Ces données :</p>
+        <ul>
+          <li>restent <strong>locales</strong>,</li>
+          <li>ne sont ni collectées, ni analysées, ni transmises,</li>
+          <li>ne quittent jamais l’appareil de l’utilisateur.</li>
+        </ul>
+
+        <h2>Connexion aux services Google (fonction optionnelle)</h2>
+        <p>Si l’utilisateur choisit de connecter My OS à son compte Google (Gmail, Agenda) :</p>
+        <ul>
+          <li>l’utilisateur donne explicitement son autorisation à Google,</li>
+          <li>Google met certaines informations <strong>à disposition du navigateur</strong>, en lecture seule,</li>
+          <li>My OS affiche ces informations <strong>localement</strong> dans le tableau de bord.</li>
+        </ul>
+        <p><strong>My OS ne transmet aucune donnée utilisateur à Google.</strong><br>
+          <strong>My OS ne stocke ni ne relaie ces données vers un serveur tiers.</strong>
+        </p>
+
+        <h2>Ce que My OS ne fait pas</h2>
+        <ul>
+          <li>ne collecte aucune donnée personnelle,</li>
+          <li>ne vend aucune donnée,</li>
+          <li>ne transfère aucune donnée,</li>
+          <li>n’analyse pas le comportement de l’utilisateur,</li>
+          <li>n’utilise aucun outil de suivi, publicité ou analytics,</li>
+          <li>n’exécute aucun code distant.</li>
+        </ul>
+
+        <h2>Contrôle par l’utilisateur</h2>
+        <p>L’utilisateur peut à tout moment :</p>
+        <ul>
+          <li>activer ou désactiver les fonctionnalités,</li>
+          <li>révoquer l’accès aux services Google,</li>
+          <li>supprimer toutes les données locales en réinitialisant l’extension ou via les paramètres du navigateur.</li>
+        </ul>
+
+        <h2>Contact</h2>
+        <p>Pour toute question concernant la confidentialité, l’utilisateur peut contacter l’éditeur via la page officielle de My OS sur le Chrome Web Store.</p>
+
+        <h2>Pourquoi cette politique est volontairement simple</h2>
+        <p>Parce que la réalité est simple.<br>
+          My OS est un outil local.<br>
+          Il ne collecte rien.<br>
+          Il ne partage rien.<br>
+          Il ne triche pas.</p>
+      </section>
+
+      <!-- EN -->
+      <section data-lang="en">
+        <h2>Core principle</h2>
+        <p><strong>My OS does not collect any user data.</strong><br>
+          <strong>My OS does not store any data on external servers.</strong><br>
+          <strong>My OS does not share any data with third parties.</strong>
+        </p>
+        <p class="muted">The extension operates entirely within the user’s browser.</p>
+
+        <h2>Local-only operation</h2>
+        <p>All My OS preferences and settings (language, background, widget layout, visual options, shortcuts, etc.) are:</p>
+        <ul>
+          <li>stored <strong>locally</strong> in the browser,</li>
+          <li>never transmitted to the developer,</li>
+          <li>never synced to any external server.</li>
+        </ul>
+        <p>My OS has <strong>no server infrastructure</strong>.</p>
+
+        <h2>Access to browser features</h2>
+        <p>My OS may access certain browser features (such as bookmarks, history, tabs, downloads, or geolocation) <strong>solely</strong> to display or use them within the dashboard, at the user’s request.</p>
+        <p>These data:</p>
+        <ul>
+          <li>remain <strong>local</strong>,</li>
+          <li>are neither collected, nor analyzed, nor transmitted,</li>
+          <li>never leave the user’s device.</li>
+        </ul>
+
+        <h2>Connection to Google services (optional feature)</h2>
+        <p>If the user chooses to connect My OS to their Google account (Gmail, Google Calendar):</p>
+        <ul>
+          <li>the user explicitly grants permission to Google,</li>
+          <li>Google makes certain information <strong>available to the browser</strong>, in read-only mode,</li>
+          <li>My OS displays this information <strong>locally</strong> within the dashboard.</li>
+        </ul>
+        <p><strong>My OS does not transmit any user data to Google.</strong><br>
+          <strong>My OS does not store or relay these data to any third-party server.</strong>
+        </p>
+
+        <h2>What My OS does not do</h2>
+        <ul>
+          <li>does not collect personal data,</li>
+          <li>does not sell data,</li>
+          <li>does not transfer data,</li>
+          <li>does not analyze user behavior,</li>
+          <li>does not use tracking, advertising, or analytics tools,</li>
+          <li>does not execute remote code.</li>
+        </ul>
+
+        <h2>User control</h2>
+        <p>At any time, the user can:</p>
+        <ul>
+          <li>enable or disable features,</li>
+          <li>revoke access to Google services,</li>
+          <li>remove all local data by resetting the extension or using browser settings.</li>
+        </ul>
+
+        <h2>Contact</h2>
+        <p>For any privacy-related questions, users can contact the developer via the official My OS page on the Chrome Web Store.</p>
+
+        <h2>Why this policy is intentionally simple</h2>
+        <p>Because the reality is simple.<br>
+          My OS is a local tool.<br>
+          It collects nothing.<br>
+          It shares nothing.<br>
+          It does not cheat.</p>
+      </section>
+    </main>
+
+    <footer>
+      <span class="muted">My OS — Privacy Policy (FR/EN)</span>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      const btnFR = document.getElementById("btnFR");
+      const btnEN = document.getElementById("btnEN");
+      const sections = Array.from(document.querySelectorAll("[data-lang]"));
+      const pill = document.getElementById("lastUpdatedPill");
+
+      function setLang(lang){
+        document.documentElement.lang = lang;
+        sections.forEach(s => s.classList.toggle("active", s.getAttribute("data-lang") === lang));
+        btnFR.setAttribute("aria-pressed", String(lang === "fr"));
+        btnEN.setAttribute("aria-pressed", String(lang === "en"));
+
+        // Optional: update pill text
+        pill.textContent = (lang === "fr")
+          ? "Dernière mise à jour : février 2026"
+          : "Last updated: February 2026";
+
+        // Persist choice
+        try{ localStorage.setItem("myos_privacy_lang", lang); }catch(e){}
+      }
+
+      btnFR.addEventListener("click", () => setLang("fr"));
+      btnEN.addEventListener("click", () => setLang("en"));
+
+      // Initial lang: stored preference > browser language
+      const saved = (() => { try{ return localStorage.getItem("myos_privacy_lang"); }catch(e){ return null; } })();
+      const browserPref = (navigator.language || "fr").toLowerCase().startsWith("fr") ? "fr" : "en";
+      setLang(saved === "fr" || saved === "en" ? saved : browserPref);
+    })();
+  </script>
+</body>
+</html>
